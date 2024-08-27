@@ -1,14 +1,13 @@
-import CommentList from './CommentList'
-import AddComment from './AddComment'
-import Loading from './Loading'
-import Error from './Error'
-import { useState,useEffect } from 'react'
+import CommentList from "./CommentList";
+import AddComment from "./AddComment";
+import Loading from "./Loading";
+import Error from "./Error";
+import { useState, useEffect } from "react";
 
 const CommentArea = (props) => {
-
-  const[comments,setComments]= useState([])
-  const[isLoading,setIsLoading]= useState(false)
-  const[isError,setIsError]= useState(false)
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   // componentDidMount = async () => {
   //   try {
@@ -40,10 +39,11 @@ const CommentArea = (props) => {
       try {
         setIsLoading(true);
         let response = await fetch(
-          'https://striveschool-api.herokuapp.com/api/comments/' + props.asin,
+          "https://striveschool-api.herokuapp.com/api/comments/" + props.asin,
           {
             headers: {
-              Authorization: 'Bearer inserisci-qui-il-tuo-token',
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNjMwNGYyNjBjYzAwMTVjYzBkZWYiLCJpYXQiOjE3MjQ3NzE5NjAsImV4cCI6MTcyNTk4MTU2MH0.oVhIIWJ26YRtxCBuxVFI_wXXqdfLSC2QpmSQSHdcCrs",
             },
           }
         );
@@ -63,20 +63,20 @@ const CommentArea = (props) => {
         setIsError(true);
       }
     };
-  
-    fetchComments();
+
+    if(props.asin !== null){
+      fetchComments()
+    } ;
   }, [props.asin]);
 
+  return (
+    <div className="text-center">
+      {isLoading && <Loading />}
+      {isError && <Error />}
+      <AddComment asin={props.asin} />
+      <CommentList commentsToShow={comments} />
+    </div>
+  );
+};
 
-    return (
-      <div className="text-center">
-        {isLoading && <Loading />}
-        {isError && <Error />}
-        <AddComment asin={props.asin} />
-        <CommentList commentsToShow={comments} />
-      </div>
-    )
-  }
-
-
-export default CommentArea
+export default CommentArea;
