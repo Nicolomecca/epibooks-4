@@ -31,13 +31,13 @@ const BookList= (props)=> {
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="g-2 mt-3">
+            <Row className="g-2 mt-3" >
               {props.books
                 .filter((b) =>
                   b.title.toLowerCase().includes(searchQuery)
                 )
                 .map((b) => (
-                  <Col xs={12} md={4} key={b.asin}  >  
+                  <Col xs={12} md={4} key={b.asin} data-testid="book-element" >  
                     <SingleBook
                       book={b}
                       selectedBook={selectedBook}
